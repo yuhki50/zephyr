@@ -223,12 +223,18 @@ static int uart_gpio_fifo_read(struct device *dev, u8_t *rx_data, const int size
 
 static void uart_gpio_irq_tx_enable(struct device *dev)
 {
-    // none
+    // for gas meter
+    const struct uart_gpio_config *config = dev->config->config_info;
+	const struct uart_gpio_data *drv_data = dev->driver_data;
+    gpio_pin_write(drv_data->gpio, config->pin_tx, 1);
 }
 
 static void uart_gpio_irq_tx_disable(struct device *dev)
 {
-    // none
+    // for gas meter
+    const struct uart_gpio_config *config = dev->config->config_info;
+	const struct uart_gpio_data *drv_data = dev->driver_data;
+    gpio_pin_write(drv_data->gpio, config->pin_tx, 0);
 }
 
 static int uart_gpio_irq_tx_ready(struct device *dev)
