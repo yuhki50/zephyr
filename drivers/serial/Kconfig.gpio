@@ -1,0 +1,84 @@
+#
+# Copyright (c) 2018 CAMI&Co.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+menuconfig UART_GPIO
+	bool "GPIO bit banging serial driver"
+	select SERIAL_HAS_DRIVER
+	select SERIAL_SUPPORT_INTERRUPT
+	help
+	  Enable software driven (bit banging) UART support using GPIO pins
+
+# ---------- Port 0 ----------
+
+config UART_GPIO_0
+	bool "Enable GPIO Bit Bang UART0 Port"
+	depends on UART_GPIO
+	help
+	  This tells the driver to configure the UART device at boot, depending
+	  on the additional configuration options below.
+
+if UART_GPIO_0
+
+config UART_GPIO_0_NAME
+	string "GPIO Bit Bang UART device 0 device name"
+	default "UART_0"
+	help
+	  This is the device name for the UART device, and is included in the
+	  device struct.
+
+config UART_GPIO_0_BAUD_RATE
+	int "GPIO Bit Bang UART device 0 baud rate"
+	default 200
+	help
+	  This is UART device baud rate, and is included in the device struct.
+
+config UART_GPIO_0_DATA_BITS
+	int "GPIO Bit Bang UART device 0 data bits (5, 6, 7, 8, 9)"
+	default 8
+	help
+	  This is UART device data bits, and is included in the device struct.
+
+config UART_GPIO_0_GPIO
+	string "Bit Bang UART device 0 GPIO name"
+	default "GPIO_0"
+	help
+	  This is the name of the GPIO device that controls the UART lines.
+
+config UART_GPIO_0_TX_PIN
+	int "Bit Bang UART device 0 GPIO pin number for TX"
+	default 21
+	help
+	  This is the GPIO pin number for the UART TX line
+
+config UART_GPIO_0_RX_PIN
+	int "Bit Bang UART device 0 GPIO pin number for RX"
+	default 23
+	help
+	  This is the GPIO pin number for the UART RX line
+
+config UART_GPIO_0_DEBUG
+	bool "Enable GPIO Bit Bang UART0 Port debuging"
+	depends on UART_GPIO
+	help
+	  This tells the driver to debuging the UART device, depending on the additional configuration options below.
+
+if UART_GPIO_0_DEBUG
+
+config UART_GPIO_0_DEBUG_DATA_BIT_PIN
+	int "Bit Bang UART device 0 GPIO pin number for the debug data bit sampling point"
+	default 19
+	help
+	  This is the GPIO pin number for the debug data bit sampling point
+
+config UART_GPIO_0_DEBUG_STOP_BIT_PIN
+	int "Bit Bang UART device 0 GPIO pin number for the debug stop bit sampling point"
+	default 22
+	help
+	  This is the GPIO pin number for the debug data bit sampling point
+
+endif # UART_GPIO_0_DEBUG
+
+endif # UART_GPIO_0
